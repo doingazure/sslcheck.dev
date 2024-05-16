@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin">
+
+  <title>Opinionated SWA Template from doingazure.com</title>
+  <meta name="description"
+    content="Opinionated (but annotated to explain), nearly ready-to-go (but with checklist of steps to get ready) repo for deploying a production Azure Static Web App. React (and/or static site (SSG)) in front, C# in back.">
+  <meta name="author" content="Bill Wilder as part of the Doing Azure Project">
+  <meta name="keywords" content="Doing Azure, doingazure.com, Azure, Static Web Apps, swa, React, C#">
+  <meta name="robots" content="index, follow">
+
+  <link rel="icon" href=".well-known/doingazure-favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/.well-known/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/.well-known/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/.well-known/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="img/doingazure-logo.png" alt="Doing Azure logo">
+      <h1>Doing Azure &bullet; ⚙a &bullet; doingazure.com</h1>
+    </div>
+  </header>
+
+  <main>
+      <h1>Ready for an SSL Check?</h1>
+      <form>
+        <label for="domain">Enter Domain or URL:</label>
+        <input type="text" id="domain" name="domain" required>
+        <button type="submit" onclick="handleCheckSsl(document.getElementById('domain').value)">Check SSL</button>
+      </form>
+  </main>
+
+  <footer>
+    <p>Copyright © 2024 doingazure.com. Shared under <a
+        href="https://github.com/doingazure/sslcheck.dev?tab=MIT-1-ov-file">MIT license</a>.</p>
+  </footer>
+</body>
+
+</html>

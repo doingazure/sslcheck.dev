@@ -1,0 +1,24 @@
+.logo {
+  /* for div with class logo, ensure sub-elements appear on same row, and any img elements are centered vertically */
+  display: flex;
+  /* justify-content: center; */
+  /* light gray background */
+  background-color: #f0f0f0;
+}
+
+.logo > img {
+  /* align-self: center; */
+  width: 100px;
+  height: auto;
+  /* add some space between logo and text */
+  margin-right: 10px;
+}
+
+.logo > h1 {
+  margin-right: 10px;
+  /* try to match Azure logo font and color */
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  color: #0072C6;
+  font-weight: bold;
+}
+
