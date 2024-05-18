@@ -16,16 +16,45 @@ namespace DoingAzure
 {
     // record SslCheckResults with fields int days, bool hasHTST, bool hasHPKP, bool hasCSP, bool hasExpectCT, bool hasExpectStaple, bool hasExpectStapleReport
     // and a constructor that sets the fields
-    public record SslCheckResults(int days, bool hsts = false); // = false, bool hasHPKP = false, bool hasCSP = false, bool hasExpectCT = false, bool hasExpectStaple = false, bool hasExpectStapleReport = false);
+    public record SslCheckResults(string domain, int ssldays, string machine,
+            bool hsts = false); // = false, bool hasHPKP = false, bool hasCSP = false, bool hasExpectCT = false, bool hasExpectStaple = false, bool hasExpectStapleReport = false);
 
     public static class SslChecker
     {
+        private static readonly string[] _hstsHeaders = new string[] { "Strict-Transport-Security" };
+        private static readonly string[] _hpkpHeaders = new string[] { "Public-Key-Pins", "Public-Key-Pins-Report-Only" };  
+        private static readonly string[] _cspHeaders = new string[] { "Content-Security-Policy" };
+        private static readonly string[] _expectCTHeaders = new string[] { "Expect-CT" };
+        private static readonly string[] _expectStapleHeaders = new string[] { "Expect-Staple" };
+        private static readonly string[] _expectStapleReportHeaders = new string[] { "Expect-Staple-Report" };
+
+        private static bool HasHeader(string header, string[] headers)
+        {
+            foreach (var h in headers)
+            {
+                if (header.StartsWith(h, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        // get machine name
+        private static string GetMachineName()
+        {
+            return Environment.MachineName;
+        }
+
+
         [FunctionName("SslCheck")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation($"➡ SslCheck called with {req.Query["domain"]}");
+            log.LogWarning($"➡ SslCheck called with {req.Query["domain"]} - not really a Warning");
 
             string domain = req.Query["domain"];
 
@@ -62,7 +91,7 @@ namespace DoingAzure
                 ? "This here HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"{ssldays}";
 
-            var jsonResponse = new SslCheckResults(ssldays);
+            var jsonResponse = new SslCheckResults(domain, ssldays, GetMachineName());
             return new OkObjectResult(jsonResponse);
 #endif
         }
