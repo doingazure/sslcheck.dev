@@ -16,7 +16,7 @@ namespace DoingAzure
 {
     // record SslCheckResults with fields int days, bool hasHTST, bool hasHPKP, bool hasCSP, bool hasExpectCT, bool hasExpectStaple, bool hasExpectStapleReport
     // and a constructor that sets the fields
-    public record SslCheckResults(string domain, int ssldays, string machine,
+    public record SslCheckResults(string domain, int ssldays, int seconds, string machine,
             bool hsts = false); // = false, bool hasHPKP = false, bool hasCSP = false, bool hasExpectCT = false, bool hasExpectStaple = false, bool hasExpectStapleReport = false);
 
     public static class SslChecker
@@ -86,12 +86,13 @@ namespace DoingAzure
             Console.WriteLine($"<{(expirationDate - DateTime.Now).TotalDays} days left>");
 
             var ssldays = expirationDate.Subtract(DateTime.Now).Days;
+            var sslseconds = expirationDate.Subtract(DateTime.Now).Seconds;
 
             string responseMessage = string.IsNullOrEmpty(domain)
                 ? "This here HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"{ssldays}";
 
-            var jsonResponse = new SslCheckResults(domain, ssldays, GetMachineName());
+            var jsonResponse = new SslCheckResults(domain, ssldays, sslseconds, GetMachineName());
             return new OkObjectResult(jsonResponse);
 #endif
         }
