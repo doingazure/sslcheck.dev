@@ -85,8 +85,8 @@ namespace DoingAzure
             Console.WriteLine($"➡ SSL for {domain} expires on {expirationDate}");
             Console.WriteLine($"<{(expirationDate - DateTime.Now).TotalDays} days left>");
 
-            var ssldays = expirationDate.Subtract(DateTime.Now).TotalDays;
-            var sslseconds = expirationDate.Subtract(DateTime.Now).TotalSeconds;
+            var ssldays = (int)expirationDate.Subtract(DateTime.Now).TotalDays;
+            var sslseconds = (long)expirationDate.Subtract(DateTime.Now).TotalSeconds;
 
             string responseMessage = string.IsNullOrEmpty(domain)
                 ? "This here HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
