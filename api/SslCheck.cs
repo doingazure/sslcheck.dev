@@ -16,7 +16,7 @@ namespace DoingAzure
 {
     // record SslCheckResults with fields int days, bool hasHTST, bool hasHPKP, bool hasCSP, bool hasExpectCT, bool hasExpectStaple, bool hasExpectStapleReport
     // and a constructor that sets the fields
-    public record SslCheckResults(string domain, int ssldays, int seconds, string machine,
+    public record SslCheckResults(string domain, long ssldays, long seconds, string machine,
             bool hsts = false); // = false, bool hasHPKP = false, bool hasCSP = false, bool hasExpectCT = false, bool hasExpectStaple = false, bool hasExpectStapleReport = false);
 
     public static class SslChecker
@@ -85,8 +85,8 @@ namespace DoingAzure
             Console.WriteLine($"➡ SSL for {domain} expires on {expirationDate}");
             Console.WriteLine($"<{(expirationDate - DateTime.Now).TotalDays} days left>");
 
-            var ssldays = (int)expirationDate.Subtract(DateTime.Now).TotalDays;
-            var sslseconds = (long)expirationDate.Subtract(DateTime.Now).TotalSeconds;
+            var ssldays = Convert.ToInt64(expirationDate.Subtract(DateTime.Now).TotalDays);
+            var sslseconds = Convert.ToInt64(expirationDate.Subtract(DateTime.Now).TotalSeconds);
 
             string responseMessage = string.IsNullOrEmpty(domain)
                 ? "This here HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
